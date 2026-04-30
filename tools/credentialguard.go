@@ -138,11 +138,11 @@ func checkDatasourceCredentials(args CreateDatasourceParams) string {
 // frontend settings, falling back to the configured URL.
 func datasourceConfigPageURL(ctx context.Context, uid string) string {
 	var base string
-	base = strings.TrimRight(mcpgrafana.GrafanaConfigFromContext(ctx).URL, "/")
+	if gc := mcpgrafana.GrafanaClientFromContext(ctx); gc != nil && gc.PublicURL != "" {
+		base = gc.PublicURL
+	}
 	if base == "" {
-		if gc := mcpgrafana.GrafanaClientFromContext(ctx); gc != nil && gc.PublicURL != "" {
-			base = gc.PublicURL
-		}
+		base = strings.TrimRight(mcpgrafana.GrafanaConfigFromContext(ctx).URL, "/")
 	}
 	if base == "" {
 		return ""

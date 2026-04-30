@@ -384,10 +384,10 @@ func TestDatasourceConfigPageURL(t *testing.T) {
 			want:       "http://localhost:3000/connections/datasources/edit/prom%2Fuid",
 		},
 		{
-			name:       "prefers config URL over public URL",
+			name:       "prefers public URL over config URL",
 			grafanaURL: "http://internal:3000",
 			publicURL:  "https://grafana.example.com",
-			want:       "http://internal:3000/connections/datasources/new",
+			want:       "https://grafana.example.com/connections/datasources/new",
 		},
 		{
 			name:      "falls back to public URL when config URL is empty",
