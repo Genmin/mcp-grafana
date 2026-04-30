@@ -254,9 +254,9 @@ func TestMatchesSecretLike_Allowed(t *testing.T) {
 		{"datasource name", "My Prometheus"},
 		{"plain uid", "abc-123-uid"},
 		{"json data key", "httpMethod"},
-		{"short password field", "password=abc"},  // under 8 chars after =
-		{"aws key too short", "AKIAIOSFODNN7EXAMP"}, // only 18 chars after AKIA
-		{"github pat too short", "ghp_abcdefghijklmnopqrstuvwxyz123456"},  // 35 chars, needs 36
+		{"short password field", "password=abc"},                         // under 8 chars after =
+		{"aws key too short", "AKIAIOSFODNN7EXAMP"},                      // only 18 chars after AKIA
+		{"github pat too short", "ghp_abcdefghijklmnopqrstuvwxyz123456"}, // 35 chars, needs 36
 	}
 
 	for _, tt := range tests {

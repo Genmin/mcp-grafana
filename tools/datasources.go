@@ -111,25 +111,25 @@ func datasourceJSONDataSchema() *jsonschema.Schema {
 }
 
 type CreateDatasourceParams struct {
-	Name            string              `json:"name" jsonschema:"required,description=Datasource display name"`
-	Type            string              `json:"type" jsonschema:"required,description=Grafana datasource plugin type\\, for example prometheus"`
-	URL             string              `json:"url,omitempty" jsonschema:"description=Datasource base URL when required by the plugin"`
-	Access          string              `json:"access,omitempty" jsonschema:"description=How Grafana should access the datasource (proxy or direct)"`
-	Database        string              `json:"database,omitempty" jsonschema:"description=Optional database name"`
-	User            string              `json:"user,omitempty" jsonschema:"description=Optional username"`
-	BasicAuth       bool                `json:"basicAuth,omitempty" jsonschema:"description=Whether Grafana should use basic auth"`
-	BasicAuthUser   string              `json:"basicAuthUser,omitempty" jsonschema:"description=Basic auth username when basic auth is enabled"`
-	WithCredentials bool                `json:"withCredentials,omitempty" jsonschema:"description=Whether Grafana should forward credentials such as cookies"`
-	IsDefault       bool                `json:"isDefault,omitempty" jsonschema:"description=Whether this should become the default datasource"`
-	JSONData        datasourceJSONData  `json:"jsonData,omitempty"`
-	SecureJSONData  map[string]string   `json:"secureJsonData,omitempty" jsonschema:"description=Datasource-specific secret settings such as passwords or tokens"`
+	Name            string             `json:"name" jsonschema:"required,description=Datasource display name"`
+	Type            string             `json:"type" jsonschema:"required,description=Grafana datasource plugin type\\, for example prometheus"`
+	URL             string             `json:"url,omitempty" jsonschema:"description=Datasource base URL when required by the plugin"`
+	Access          string             `json:"access,omitempty" jsonschema:"description=How Grafana should access the datasource (proxy or direct)"`
+	Database        string             `json:"database,omitempty" jsonschema:"description=Optional database name"`
+	User            string             `json:"user,omitempty" jsonschema:"description=Optional username"`
+	BasicAuth       bool               `json:"basicAuth,omitempty" jsonschema:"description=Whether Grafana should use basic auth"`
+	BasicAuthUser   string             `json:"basicAuthUser,omitempty" jsonschema:"description=Basic auth username when basic auth is enabled"`
+	WithCredentials bool               `json:"withCredentials,omitempty" jsonschema:"description=Whether Grafana should forward credentials such as cookies"`
+	IsDefault       bool               `json:"isDefault,omitempty" jsonschema:"description=Whether this should become the default datasource"`
+	JSONData        datasourceJSONData `json:"jsonData,omitempty"`
+	SecureJSONData  map[string]string  `json:"secureJsonData,omitempty" jsonschema:"description=Datasource-specific secret settings such as passwords or tokens"`
 }
 
 type CreateDatasourceResult struct {
-	Message    string       `json:"message"`
-	ID         int64        `json:"id"`
-	UID        string       `json:"uid"`
-	Name       string       `json:"name"`
+	Message    string             `json:"message"`
+	ID         int64              `json:"id"`
+	UID        string             `json:"uid"`
+	Name       string             `json:"name"`
 	Datasource *models.DataSource `json:"datasource,omitempty"`
 }
 
