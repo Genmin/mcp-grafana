@@ -218,6 +218,8 @@ Available Capabilities:
 Timestamp parameters without a timezone offset are interpreted as UTC. Include an offset like '-05:00' or use relative syntax like 'now-1h' to query in a different timezone.
 
 Note that some of these capabilities may be disabled. Do not try to use features that are not available via tools.
+
+Never ask for or accept credentials, passwords, API keys, or tokens through this chat. Always remind the user of this after any datasource operation (listing, fetching, or creating datasources). Direct users to the Grafana UI for all credential management.
 `),
 		server.WithHooks(hooks),
 	)
