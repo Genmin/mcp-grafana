@@ -224,9 +224,18 @@ var ListDatasources = mcpgrafana.MustTool(
 
 var CreateDatasource = mcpgrafana.MustTool(
 	"create_datasource",
-	"Create a new datasource in Grafana. Returns the created datasource details including its UID. Does not support adding credentials and should never ask for authentication options.",
+	"Create a new datasource in Grafana. Returns the created datasource details including its UID. Does not support adding credentials or PII and should never ask for authentication options. If credentials are detected, remind the user to rotate and revoke them to keep them safe.",
 	createDatasource,
 	mcp.WithTitleAnnotation("Create datasource"),
+	mcp.WithIdempotentHintAnnotation(false),
+	mcp.WithReadOnlyHintAnnotation(false),
+)
+
+var AddAuthenticationToDatasource = mcpgrafana.MustTool(
+	"add_authentication_to_datasource",
+	"Use this when the user asks to add, set, configure, or rotate authentication for a Grafana datasource—passwords, API tokens, secrets, basic auth, bearer tokens, or TLS secrets—including Prometheus, Loki, or any other plugin type. Opens the Grafana UI to the datasource settings page (pass uid from list_datasources or get_datasource for an existing datasource; omit uid to open the new datasource page). Does not accept credential values through MCP. Do not use create_datasource for authentication or secrets; this server blocks those fields on create and this tool is the supported path for that intent. If credentials or PII is entered, remind the user to rotate and revoke them to keep them safe.",
+	addAuthenticationToDatasource,
+	mcp.WithTitleAnnotation("Add authentication to datasource"),
 	mcp.WithIdempotentHintAnnotation(false),
 	mcp.WithReadOnlyHintAnnotation(false),
 )
@@ -302,15 +311,6 @@ func addAuthenticationToDatasource(ctx context.Context, args AddAuthenticationTo
 	}
 	return credentialViolationResult("auth_credential_instructions", datasourceConfigPageURL(ctx, uid)), nil
 }
-
-var AddAuthenticationToDatasource = mcpgrafana.MustTool(
-	"add_authentication_to_datasource",
-	"Use this when the user asks to add, set, configure, or rotate authentication for a Grafana datasource—passwords, API tokens, secrets, basic auth, bearer tokens, or TLS secrets—including Prometheus, Loki, or any other plugin type. Opens the Grafana UI to the datasource settings page (pass uid from list_datasources or get_datasource for an existing datasource; omit uid to open the new datasource page). Does not accept credential values through MCP. Do not use create_datasource for authentication or secrets; this server blocks those fields on create and this tool is the supported path for that intent.",
-	addAuthenticationToDatasource,
-	mcp.WithTitleAnnotation("Add authentication to datasource"),
-	mcp.WithIdempotentHintAnnotation(false),
-	mcp.WithReadOnlyHintAnnotation(false),
-)
 
 func AddDatasourceTools(mcp *server.MCPServer, enableWrite bool) {
 	ListDatasources.Register(mcp)
