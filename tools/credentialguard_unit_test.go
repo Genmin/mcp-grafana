@@ -384,10 +384,15 @@ func TestDatasourceConfigPageURL(t *testing.T) {
 			want:       "http://localhost:3000/connections/datasources/edit/prom%2Fuid",
 		},
 		{
-			name:       "prefers public URL over config URL",
+			name:       "prefers config URL over public URL",
 			grafanaURL: "http://internal:3000",
 			publicURL:  "https://grafana.example.com",
-			want:       "https://grafana.example.com/connections/datasources/new",
+			want:       "http://internal:3000/connections/datasources/new",
+		},
+		{
+			name:      "falls back to public URL when config URL is empty",
+			publicURL: "https://grafana.example.com",
+			want:      "https://grafana.example.com/connections/datasources/new",
 		},
 		{
 			name:       "https config URL supported",
@@ -400,11 +405,10 @@ func TestDatasourceConfigPageURL(t *testing.T) {
 			want:       "https://grafana.example.com/grafana/connections/datasources/new",
 		},
 		{
-			name:       "public URL sub-path is preserved",
-			grafanaURL: "http://internal:3000",
-			publicURL:  "https://grafana.example.com/grafana",
-			uid:        "prometheus",
-			want:       "https://grafana.example.com/grafana/connections/datasources/edit/prometheus",
+			name:      "public URL sub-path is preserved when config URL is empty",
+			publicURL: "https://grafana.example.com/grafana",
+			uid:       "prometheus",
+			want:      "https://grafana.example.com/grafana/connections/datasources/edit/prometheus",
 		},
 		{
 			name: "empty URL returns empty string",
